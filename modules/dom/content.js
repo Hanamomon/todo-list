@@ -44,9 +44,10 @@ export default class MainContent {
                 const checkItemElement = createAnElement("li", "check-item");
                 const checkItemBox = document.createElement("input");
                 const checkItemText = createAnElement("label", "", "", checkItem);
-
                 checkItemBox.type = "checkbox";
-                checkItemElement.append(checkItemBox, checkItemText);
+
+                checkItemBox.appendChild(checkItemText);
+                checkItemElement.append(checkItemBox);
 
                 todoChecklist.appendChild(checkItemElement);
             })
@@ -65,13 +66,11 @@ export default class MainContent {
     displayProjectTodos() {
         const {activeProject} = this.todoList;
         const projectTodosDiv = createAnElement("div", "", "project-todos");
-        const curProjectHeading = createAnElement("h2", "", "", activeProject.name);
 
-        const todoAdd = document.createElement("div");
-        const todoAddLabel = createAnElement("label", "", "", "Add Todo");
-        const todoAddInput = createAnElement("input", "", "todo-to-add");
-        todoAddInput.setAttribute("placeholder", "Add Task");
-        todoAdd.append(todoAddLabel ,todoAddInput);
+        const projHeadDiv = createAnElement("div", "", "project-todos-head")
+        const curProjectHeading = createAnElement("h2", "", "", activeProject.name);
+        const todoAddBtn = createAnElement("button", "", "", "Add Todo");
+        projHeadDiv.append(curProjectHeading , todoAddBtn);
 
         const todosDiv = createAnElement("div", "todo-group");
         activeProject.todos.forEach((todo) => {
@@ -89,7 +88,7 @@ export default class MainContent {
             todosDiv.appendChild(todoItemDiv);
         });
 
-        projectTodosDiv.append(curProjectHeading, todoAdd, todosDiv);
+        projectTodosDiv.append(projHeadDiv, todosDiv);
         this.contentDiv.appendChild(projectTodosDiv);
     }
 
@@ -102,8 +101,10 @@ export default class MainContent {
 
             const projectTodos = document.createElement("ul");
             for (let i = 0; i < 3; i++) {
-                const projectSingleTodo = document.createAnElement("li", "", "", project.todos[i]);
-                projectTodos.appendChild(projectSingleTodo);
+                if (project.todos[i]) {
+                    const projectSingleTodo = createAnElement("li", "", "", project.todos[i]);
+                    projectTodos.appendChild(projectSingleTodo);
+                }
             }
 
             projectCard.append(projectName, projectTodos);
