@@ -17,7 +17,7 @@ export default class ProjectHandler {
     }
 
     selectActiveProject(projectName) {
-        const foundProject = this.projects.find((project) => {projectName === project.name;})
+        const foundProject = this.projects.find((project) => projectName === project.name);
         if (foundProject !== undefined)
             this.activeProject = foundProject;
     }
