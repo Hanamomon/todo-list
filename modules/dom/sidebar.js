@@ -10,8 +10,9 @@ function createAnElement(tag, className, id, text) {
 }
 
 export default class Sidebar {
-    constructor(todoList) {
+    constructor(todoList, mainContent) {
         this.todoList = todoList;
+        this.mainContent = mainContent;
         this.sidebarDiv = document.getElementById("sidebar");
     }
 
@@ -22,10 +23,11 @@ export default class Sidebar {
         inbox.textContent = this.todoList.projects[0].name;
         this.sidebarDiv.append(heading, inbox);
 
-        this.updateSidebar();
+        this.displayProjects();
     }
 
-    updateSidebar() {
+    displayProjects() {
+        const sidebarProjects = createAnElement("div", "", "sidebar-projects");
         const projectHead = createAnElement("div", "", "project-add-div");
         const projectHeading = createAnElement("h2", "", "", "My Projects");
         const projectAdd = createAnElement("button", "", "", "+");
@@ -40,11 +42,12 @@ export default class Sidebar {
             }
             projectElement.addEventListener("click", () => {
                 this.todoList.selectActiveProject(project.name);
-                // Change content view to display active project
-            })
+                this.mainContent.display("project-todos");
+            }) // Move to standalone event file
             projectList.appendChild(projectElement);
         });
 
-        this.sidebarDiv.append(projectHead, projectList);
+        sidebarProjects.append(projectHead, projectList);
+        this.sidebarDiv.appendChild(sidebarProjects);
     }
 }
