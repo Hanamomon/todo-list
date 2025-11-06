@@ -17,6 +17,7 @@ export default class Sidebar {
     }
 
     display() {
+        this.sidebarDiv.innerHTML = "";
         const heading = createAnElement("h1", "", "", "Todo List");
 
         const inbox = document.createElement("h3");
@@ -28,10 +29,14 @@ export default class Sidebar {
 
     displayProjects() {
         const sidebarProjects = createAnElement("div", "", "sidebar-projects");
-        const projectHead = createAnElement("div", "", "project-add-div");
+        const projectHead = createAnElement("div", "", "project-head-div");
         const projectHeading = createAnElement("h2", "", "", "My Projects");
-        const projectAdd = createAnElement("button", "", "", "+");
+        const projectAdd = createAnElement("button", "", "project-add-button", "+");
         projectHeading.textContent = "My Projects";
+        projectHeading.addEventListener("click", () => {
+            this.mainContent.display("project-view");
+        })
+
         projectHead.append(projectHeading, projectAdd);
 
         const projectList = createAnElement("ul", "", "project-list");
@@ -42,6 +47,7 @@ export default class Sidebar {
             }
             projectElement.addEventListener("click", () => {
                 this.todoList.selectActiveProject(project.name);
+                this.display();
                 this.mainContent.display("project-todos");
             }) // Move to standalone event file
             projectList.appendChild(projectElement);
