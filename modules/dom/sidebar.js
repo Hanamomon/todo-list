@@ -1,3 +1,5 @@
+import deleteIcon from "../../src/icons/delete.svg";
+
 function createAnElement(tag, className, id, text) {
     const element = document.createElement(tag);
     if (className)
@@ -38,11 +40,21 @@ export default class Sidebar {
 
         const projectList = createAnElement("ul", "", "project-list");
         this.todoList.projects.forEach((project) => {
-            const projectElement = createAnElement("li", "", "", project.name);
+            const projectElement = createAnElement("div", "project-item")
+            const projectName = createAnElement("li", "", "", project.name);
             if (project.name === this.todoList.activeProject.name) {
                 projectElement.classList.toggle("active-project-sidebar");
             }
-            projectList.appendChild(projectElement);
+            if (project.name === "Inbox") {
+                projectElement.appendChild(projectName);
+                projectList.appendChild(projectElement);
+            }
+            else {
+                const projectDelete = document.createElement("img");
+                projectDelete.src = deleteIcon;
+                projectElement.append(projectName, projectDelete);
+                projectList.appendChild(projectElement);
+            }
         });
 
         sidebarProjects.append(projectHead, projectList);

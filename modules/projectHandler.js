@@ -11,7 +11,7 @@ export default class ProjectHandler {
     }
 
     removeProject(projectName) {
-        const foundProject = this.projects.find((project) => {projectName === project.name;})
+        const foundProject = this.projects.filter((project) => projectName !== project.name)
         if (foundProject !== undefined)
             this.projects = foundProject;
     }
