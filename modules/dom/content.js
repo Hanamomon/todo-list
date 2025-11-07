@@ -98,7 +98,7 @@ export default class MainContent {
             const projectTodos = document.createElement("ul");
             for (let i = 0; i < 3; i++) {
                 if (project.todos[i]) {
-                    const projectSingleTodo = createAnElement("li", "", "", project.todos[i]);
+                    const projectSingleTodo = createAnElement("li", "", "", project.todos[i].title);
                     projectTodos.appendChild(projectSingleTodo);
                 }
             }
