@@ -16,6 +16,11 @@ export default class EventManager {
                 this.sidebar.display();
                 this.mainContent.display("project-todos");
             }
+            else if (e.target.tagName === "LI") {
+                this.projectHandler.selectActiveProject(e.target.textContent);
+                this.sidebar.display();
+                this.mainContent.display("project-todos");
+            }
             else if (e.target.id === "project-add-button")
                 addDialog.showModal();
             else if (e.target.tagName === "IMG") {
