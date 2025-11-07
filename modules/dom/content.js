@@ -81,10 +81,6 @@ export default class MainContent {
 
             todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate);
 
-            todoItemDiv.addEventListener("click", () => {
-                this.display("single-todo", todo);
-            }); // Move to standalone event file
-
             todosDiv.appendChild(todoItemDiv);
         });
 

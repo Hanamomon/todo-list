@@ -66,4 +66,25 @@ export default class EventManager {
             }
         })
     }
+
+    contentEvents() {
+        this.mainContent.contentDiv.addEventListener("click", (e) => {
+            console.log(e.target.className)
+            if (e.target.parentNode.className === "todo-item") {
+                let clickedTodoTitle = e.target.parentNode.firstChild.textContent;
+                this.projectHandler.activeProject.todos.forEach((todo) => {
+                    if (todo.title === clickedTodoTitle)
+                        this.mainContent.display("single-todo", todo);
+                })
+            }
+            else if (e.target.className === "todo-item") {
+                let clickedTodoTitle = e.target.firstChild.textContent;
+                this.projectHandler.activeProject.todos.forEach((todo) => {
+                    if (todo.title === clickedTodoTitle)
+                        this.mainContent.display("single-todo", todo);
+                })
+            }
+        })
+    }
+
 }
