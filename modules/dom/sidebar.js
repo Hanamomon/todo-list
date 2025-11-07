@@ -33,9 +33,6 @@ export default class Sidebar {
         const projectHeading = createAnElement("h2", "", "", "My Projects");
         const projectAdd = createAnElement("button", "", "project-add-button", "+");
         projectHeading.textContent = "My Projects";
-        projectHeading.addEventListener("click", () => {
-            this.mainContent.display("project-view");
-        })
 
         projectHead.append(projectHeading, projectAdd);
 
@@ -45,11 +42,6 @@ export default class Sidebar {
             if (project.name === this.todoList.activeProject.name) {
                 projectElement.classList.toggle("active-project-sidebar");
             }
-            projectElement.addEventListener("click", () => {
-                this.todoList.selectActiveProject(project.name);
-                this.display();
-                this.mainContent.display("project-todos");
-            }) // Move to standalone event file
             projectList.appendChild(projectElement);
         });
 
