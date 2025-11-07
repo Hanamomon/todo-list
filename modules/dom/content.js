@@ -46,8 +46,7 @@ export default class MainContent {
                 const checkItemText = createAnElement("label", "", "", checkItem);
                 checkItemBox.type = "checkbox";
 
-                checkItemBox.appendChild(checkItemText);
-                checkItemElement.append(checkItemBox);
+                checkItemElement.append(checkItemBox, checkItemText);
 
                 todoChecklist.appendChild(checkItemElement);
             })
