@@ -25,6 +25,12 @@ export default class EventManager {
         const addDialog = document.getElementById("project-add-dialog");
         const projectName = addDialog.querySelector("input");
         const confirmBtn = document.getElementById("confirm-btn");
+        const closeBtn = document.getElementById("close-btn");
+
+        closeBtn.addEventListener("click", (e) => {
+            projectName.value = "";
+            addDialog.close(projectName.value);
+        })
 
         confirmBtn.addEventListener("click", (e) => {
             addDialog.close(projectName.value);
