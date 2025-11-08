@@ -38,7 +38,7 @@ export default class MainContent {
         const todoDate = createAnElement ("p", "", "single-todo-date", todo.dueDate);
         todoDiv.append(todoTitle, todoDesc, todoDate);
 
-        if (Array.isArray(todo.checklist)) {
+        /*if (Array.isArray(todo.checklist)) {
             const todoChecklist = createAnElement("ul", "", "todo-checklist");
             todo.checklist.forEach((checkItem) => {
                 const checkItemElement = createAnElement("li", "check-item");
@@ -52,7 +52,7 @@ export default class MainContent {
             })
 
             todoDiv.appendChild(todoChecklist);
-        }
+        }*/
 
         if (todo.notes) {
             const todoNotes = createAnElement("p", "", "single-todo-notes", todo.notes);
