@@ -1,3 +1,5 @@
+import deleteIcon from "../../src/icons/delete.svg";
+
 import {isValid, format} from "date-fns";
 
 function createAnElement(tag, className, id, text) {
@@ -83,13 +85,16 @@ export default class MainContent {
             const todoItemDiv = createAnElement("div", "todo-item");
             const todoItemTitle = createAnElement("p", "todo-item-title", "", todo.title);
             const todoItemPrio = createAnElement("div", "todo-item-prio", "", todo.priority);
+            const todoItemDelete = document.createElement("img");
+            todoItemDelete.src = (deleteIcon);
+            todoItemDiv.setAttribute("data-id", todo.id);
 
             if (isValid(new Date(todo.dueDate))) {
                 const todoItemDate = createAnElement ("p", "", "single-todo-date", format(todo.dueDate, "MMM do, yyyy"));
-                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate);
+                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate, todoItemDelete);
             }
             else
-                todoItemDiv.append(todoItemTitle, todoItemPrio);
+                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDelete);
 
             todosDiv.appendChild(todoItemDiv);
         });

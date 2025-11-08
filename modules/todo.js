@@ -6,6 +6,7 @@ export default class Todo {
         this.priority = priority;
         this.notes = notes;
         this.complete = false;
+        this.id = crypto.randomUUID();
     }
 
     setComplete() {

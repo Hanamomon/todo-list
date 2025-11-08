@@ -72,7 +72,12 @@ export default class EventManager {
     contentEvents() {
         const addTodoDialog = document.getElementById("todo-add-dialog");
         this.mainContent.contentDiv.addEventListener("click", (e) => {
-            if (e.target.parentNode.className === "todo-item") {
+            if (e.target.tagName === "IMG") {
+                console.log("a")
+                this.projectHandler.activeProject.removeTodo(e.target.parentNode.dataset.id);
+                this.mainContent.display("project-todos");
+            }
+            else if (e.target.parentNode.className === "todo-item") {
                 let clickedTodoTitle = e.target.parentNode.firstChild.textContent;
                 this.projectHandler.activeProject.todos.forEach((todo) => {
                     if (todo.title === clickedTodoTitle)
