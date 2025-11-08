@@ -36,7 +36,11 @@ export default class MainContent {
         const todoTitle = createAnElement("h2", "", "single-todo-title", todo.title);
         const todoDesc = createAnElement("p", "", "single-todo-desc", todo.description);
         const todoDate = createAnElement ("p", "", "single-todo-date", todo.dueDate);
-        todoDiv.append(todoTitle, todoDesc, todoDate);
+
+        if (todoDate.textContent !== "Invalid Date")
+            todoDiv.append(todoTitle, todoDesc, todoDate);
+        else
+            todoDiv.append(todoTitle, todoDesc);
 
         /*if (Array.isArray(todo.checklist)) {
             const todoChecklist = createAnElement("ul", "", "todo-checklist");
@@ -78,7 +82,10 @@ export default class MainContent {
             const todoItemPrio = createAnElement("div", "todo-item-prio", "", todo.priority);
             const todoItemDate = createAnElement("p", "todo-item-date", "", todo.dueDate);
 
-            todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate);
+            if (todoItemDate.textContent !== "Invalid Date")
+                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate);
+            else
+                todoItemDiv.append(todoItemTitle, todoItemPrio);
 
             todosDiv.appendChild(todoItemDiv);
         });

@@ -19,6 +19,49 @@
             <button id="close-btn" value="cancel" autofocus>Close</button>
             <button id="confirm-btn" value="default">Confirm</button>
         </dialog>
+        <dialog id="todo-add-dialog">
+            <form method="dialog">
+                <div class="todo-add-field">
+                    <label for="todo-title-input">Title:</label>
+                    <input id="todo-title-input" name="todo-title" type="text">
+                </div>
+                <div class="todo-add-field">
+                    <label for="todo-description-input">Description:</label>
+                    <textarea name="todo-description" id="todo-description-input"></textarea>
+                </div>
+                <div class="todo-add-field">
+                    <label for="todo-date-input">Due Date:</label>
+                    <input id="todo-date-input" name="todo-date" type="date">
+                </div>
+                <fieldset>
+                    <legend>Priority:</legend>
+                    <div>
+                        <input id="todo-priority-none" name="todo-priority" value="" type="radio" checked>
+                        <label for="todo-priority-none">None</label>
+                    </div>
+                    <div>
+                        <input id="todo-priority-low" name="todo-priority" value="low" type="radio">
+                        <label for="todo-priority-low">Low</label>
+                    </div>
+                    <div>
+                        <input id="todo-priority-medium" name="todo-priority" value="medium" type="radio">
+                        <label for="todo-priority-medium">Medium</label>
+                    </div>
+                    <div>
+                        <input id="todo-priority-high" name="todo-priority" value="high" type="radio">
+                        <label for="todo-priority-high">High</label>
+                    </div>
+                </fieldset>
+                <div class="todo-add-field">
+                    <label for="todo-notes-input">Notes:</label>
+                    <textarea name="todo-notes" id="todo-notes-input"></textarea>
+                </div>
+                <div id="todo-add-buttons">
+                    <button type="button" id="todo-close-btn" value="cancel" autofocus>Close</button>
+                    <button id="todo-confirm-btn" value="default">Confirm</button>
+                </div>
+            </form>
+        </dialog>
     </div>
 </body>
 </html>

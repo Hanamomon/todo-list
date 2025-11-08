@@ -1,3 +1,5 @@
+import Todo from "../todo";
+
 export default class EventManager {
     constructor(projectHandler, sidebar, mainContent) {
         this.projectHandler = projectHandler;
@@ -68,8 +70,8 @@ export default class EventManager {
     }
 
     contentEvents() {
+        const addTodoDialog = document.getElementById("todo-add-dialog");
         this.mainContent.contentDiv.addEventListener("click", (e) => {
-            console.log(e.target.className)
             if (e.target.parentNode.className === "todo-item") {
                 let clickedTodoTitle = e.target.parentNode.firstChild.textContent;
                 this.projectHandler.activeProject.todos.forEach((todo) => {
@@ -84,7 +86,47 @@ export default class EventManager {
                         this.mainContent.display("single-todo", todo);
                 })
             }
+            else if (e.target.parentNode.id === "project-todos-head" && e.target.tagName === "BUTTON") {
+                addTodoDialog.showModal();
+            }
         })
     }
 
+    addTodoModal() {
+        const addTodoDialog = document.getElementById("todo-add-dialog");
+        const confirmBtn = document.getElementById("todo-confirm-btn");
+        const closeBtn = document.getElementById("todo-close-btn");
+        const form = document.querySelector("form");
+
+        closeBtn.addEventListener("click", (e) => {
+            addTodoDialog.close("cancel");
+        })
+
+        confirmBtn.addEventListener("click", (e) => {
+            const formData = new FormData(form, confirmBtn);
+            let formResult = {};
+            let formValid = true;
+
+            for (const [key, value] of formData) {
+                console.log(`${key}: ${value}`);
+                if (key === "todo-title" && value === "") {
+                    alert("Enter a title for the task!");
+                    formValid = false;
+                }
+                formResult[key] = value;
+            }
+            if (formValid) {
+                addTodoDialog.close(JSON.stringify(formResult));
+            }
+        })
+
+        addTodoDialog.addEventListener("close", () => {
+            if (addTodoDialog.returnValue !== "default" && addTodoDialog.returnValue !== "cancel") {
+                const dialogResult = JSON.parse(addTodoDialog.returnValue);
+                this.projectHandler.activeProject.addTodo(new Todo(dialogResult["todo-title"], dialogResult["todo-description"], dialogResult["todo-date"], dialogResult["todo-priority"], dialogResult["todo-notes"]));
+                this.sidebar.display();
+                this.mainContent.display("project-todos");
+            }
+        })
+    }
 }
