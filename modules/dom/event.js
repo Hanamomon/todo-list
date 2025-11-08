@@ -98,17 +98,17 @@ export default class EventManager {
         const closeBtn = document.getElementById("todo-close-btn");
         const form = document.querySelector("form");
 
-        closeBtn.addEventListener("click", (e) => {
+        closeBtn.addEventListener("click", () => {
             addTodoDialog.close("cancel");
         })
 
         confirmBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             const formData = new FormData(form, confirmBtn);
             let formResult = {};
             let formValid = true;
 
             for (const [key, value] of formData) {
-                console.log(`${key}: ${value}`);
                 if (key === "todo-title" && value === "") {
                     alert("Enter a title for the task!");
                     formValid = false;
@@ -116,6 +116,7 @@ export default class EventManager {
                 formResult[key] = value;
             }
             if (formValid) {
+                form.reset();
                 addTodoDialog.close(JSON.stringify(formResult));
             }
         })

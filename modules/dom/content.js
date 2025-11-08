@@ -1,3 +1,5 @@
+import {isValid, format} from "date-fns";
+
 function createAnElement(tag, className, id, text) {
     const element = document.createElement(tag);
     if (className)
@@ -35,10 +37,11 @@ export default class MainContent {
         const todoDiv = createAnElement("div", "", "single-todo")
         const todoTitle = createAnElement("h2", "", "single-todo-title", todo.title);
         const todoDesc = createAnElement("p", "", "single-todo-desc", todo.description);
-        const todoDate = createAnElement ("p", "", "single-todo-date", todo.dueDate);
 
-        if (todoDate.textContent !== "Invalid Date")
+        if (isValid(new Date(todo.dueDate))) {
+            const todoDate = createAnElement ("p", "", "single-todo-date", format(todo.dueDate, "MMM do, yyyy"));
             todoDiv.append(todoTitle, todoDesc, todoDate);
+        }
         else
             todoDiv.append(todoTitle, todoDesc);
 
@@ -80,10 +83,11 @@ export default class MainContent {
             const todoItemDiv = createAnElement("div", "todo-item");
             const todoItemTitle = createAnElement("p", "todo-item-title", "", todo.title);
             const todoItemPrio = createAnElement("div", "todo-item-prio", "", todo.priority);
-            const todoItemDate = createAnElement("p", "todo-item-date", "", todo.dueDate);
 
-            if (todoItemDate.textContent !== "Invalid Date")
+            if (isValid(new Date(todo.dueDate))) {
+                const todoItemDate = createAnElement ("p", "", "single-todo-date", format(todo.dueDate, "MMM do, yyyy"));
                 todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate);
+            }
             else
                 todoItemDiv.append(todoItemTitle, todoItemPrio);
 
