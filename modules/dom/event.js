@@ -27,9 +27,11 @@ export default class EventManager {
                 addDialog.showModal();
             else if (e.target.tagName === "IMG") {
                 this.projectHandler.removeProject(e.target.previousElementSibling.textContent);
-                this.projectHandler.selectActiveProject("Inbox");
+                if (e.target.parentNode.firstChild.textContent === this.projectHandler.activeProject.name) {
+                    this.projectHandler.selectActiveProject("Inbox");
+                    this.mainContent.display("project-todos");
+                }
                 this.sidebar.display();
-                this.mainContent.display("project-todos");
             }
         });
     }
