@@ -13,12 +13,7 @@ export default class EventManager {
             if (e.target.tagName === "H2") {
                 this.mainContent.display("project-view");
             }
-            else if (e.target.className === "project-item") {
-                this.projectHandler.selectActiveProject(e.target.textContent);
-                this.sidebar.display();
-                this.mainContent.display("project-todos");
-            }
-            else if (e.target.tagName === "LI") {
+            else if (e.target.className === "project-item" || e.target.classList.contains("active-project-sidebar") || e.target.tagName === "LI") {
                 this.projectHandler.selectActiveProject(e.target.textContent);
                 this.sidebar.display();
                 this.mainContent.display("project-todos");
