@@ -1,0 +1,105 @@
+/* Normalize/Reset styles */
+
+:root {
+  line-height: 1.5;
+}
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+h1, h2, h3, p, li, ul {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+button,
+input,
+textarea {
+	font-family: inherit;
+	font-size: 100%;
+	line-height: 1.15;
+  padding: 0;
+}
+
+/* Layout */
+
+#container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+
+#sidebar {
+  flex-basis: 20vw;
+  background-color: #9381ff;
+  padding: 1rem 1.5rem;
+}
+
+#sidebar li, #sidebar h3, #sidebar h2, #sidebar h1 {
+  color: #f8f7ff;
+}
+
+#project-head-div {
+  display: flex;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+}
+
+#project-head-div > h2 {
+  margin-right: auto;
+}
+
+.project-list-selected {
+  background-color: #b8b8ff;
+  border-radius: 25px;
+}
+
+#project-add-button {
+  background-color: #fc7753;
+  border-radius: 50%;
+  padding: 0 0.5rem;
+  color: #f8f7ff;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+}
+
+.active-project-sidebar {
+  background-color: #fc7753;
+}
+
+/* Content */
+
+#content {
+  flex: 1;
+  background-color: #b8b8ff;
+  padding: 1rem 1.5rem;
+}
+
+#project-todos-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+}

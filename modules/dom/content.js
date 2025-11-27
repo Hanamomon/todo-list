@@ -1,4 +1,5 @@
 import deleteIcon from "../../src/icons/delete.svg";
+import editIcon from "../../src/icons/edit.svg";
 
 import {isValid, format} from "date-fns";
 
@@ -85,16 +86,20 @@ export default class MainContent {
             const todoItemDiv = createAnElement("div", "todo-item");
             const todoItemTitle = createAnElement("p", "todo-item-title", "", todo.title);
             const todoItemPrio = createAnElement("div", "todo-item-prio", "", todo.priority);
-            const todoItemDelete = document.createElement("img");
+            const todoItemEdit = createAnElement("img", "todo-item-edit");
+            const todoItemDelete = createAnElement("img", "todo-item-delete");
+            const todoItemIcons = createAnElement("div", "todo-item-icons");
+            todoItemEdit.src = (editIcon);
             todoItemDelete.src = (deleteIcon);
+            todoItemIcons.append(todoItemEdit, todoItemDelete);
             todoItemDiv.setAttribute("data-id", todo.id);
 
-            if (isValid(new Date(todo.dueDate))) {
-                const todoItemDate = createAnElement ("p", "", "single-todo-date", format(todo.dueDate, "MMM do, yyyy"));
-                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate, todoItemDelete);
+            if (isValid(todo.dueDate)) {
+                const todoItemDate = createAnElement ("p", "", "todo-item-date", format(todo.dueDate, "MMM do, yyyy"));
+                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate, todoItemIcons);
             }
             else
-                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDelete);
+                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemIcons);
 
             todosDiv.appendChild(todoItemDiv);
         });

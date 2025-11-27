@@ -1,5 +1,7 @@
 import Todo from "../todo";
 
+import {isValid, format, parseISO} from "date-fns";
+
 export default class EventManager {
     constructor(projectHandler, sidebar, mainContent) {
         this.projectHandler = projectHandler;
@@ -10,7 +12,11 @@ export default class EventManager {
     sidebarEvents() {
         const addDialog = document.getElementById("project-add-dialog");
         this.sidebar.sidebarDiv.addEventListener("click", (e) => {
-            if (e.target.tagName === "H2") {
+            if (e.target.id === "project-head-div" || e.target.tagName === "H2") {
+                if (e.target.id === "project-head-div")
+                    e.target.classList.add("project-list-selected");
+                else
+                    e.target.parentNode.classList.add("project-list-selected");
                 this.mainContent.display("project-view");
             }
             else if (e.target.className === "project-item" || e.target.classList.contains("active-project-sidebar") || e.target.tagName === "LI") {
@@ -67,12 +73,14 @@ export default class EventManager {
     }
 
     contentEvents() {
-        const addTodoDialog = document.getElementById("todo-add-dialog");
         this.mainContent.contentDiv.addEventListener("click", (e) => {
-            if (e.target.tagName === "IMG") {
-                console.log("a")
-                this.projectHandler.activeProject.removeTodo(e.target.parentNode.dataset.id);
+            if (e.target.className === "todo-item-delete") {
+                this.projectHandler.activeProject.removeTodo(e.target.parentNode.parentNode.dataset.id);
                 this.mainContent.display("project-todos");
+            }
+            else if (e.target.className === "todo-item-edit") {
+                let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.parentNode.parentNode.dataset.id);
+                this.openEditModal(currentIndex);
             }
             else if (e.target.parentNode.className === "todo-item") {
                 let clickedTodoTitle = e.target.parentNode.firstChild.textContent;
@@ -89,9 +97,32 @@ export default class EventManager {
                 })
             }
             else if (e.target.parentNode.id === "project-todos-head" && e.target.tagName === "BUTTON") {
-                addTodoDialog.showModal();
+                this.openAddModal();
             }
         })
+    }
+    
+    openAddModal() {
+        const addTodoDialog = document.getElementById("todo-add-dialog");
+        addTodoDialog.dataset.mode = "add";
+        addTodoDialog.showModal();
+    }
+
+    openEditModal(todoIndex) {
+        const addTodoDialog = document.getElementById("todo-add-dialog");
+        const todoItem = this.projectHandler.activeProject.todos[todoIndex];
+        addTodoDialog.dataset.mode = "edit";
+        addTodoDialog.dataset.index = todoIndex;
+
+        const formElements = addTodoDialog.querySelector("form").elements;
+        formElements["todo-title"].value = todoItem.title;
+        if (todoItem.description)
+            formElements["todo-description"].value = todoItem.description;
+        if (isValid(todoItem.dueDate))
+            formElements["todo-date"].value = format(todoItem.dueDate, "yyyy-MM-dd");
+        formElements["todo-priority"].value = todoItem.priority;
+        formElements["todo-notes"].value = todoItem.notes;
+        addTodoDialog.showModal();
     }
 
     addTodoModal() {
@@ -101,6 +132,7 @@ export default class EventManager {
         const form = document.querySelector("form");
 
         closeBtn.addEventListener("click", () => {
+            form.reset();
             addTodoDialog.close("cancel");
         })
 
@@ -126,7 +158,15 @@ export default class EventManager {
         addTodoDialog.addEventListener("close", () => {
             if (addTodoDialog.returnValue !== "default" && addTodoDialog.returnValue !== "cancel") {
                 const dialogResult = JSON.parse(addTodoDialog.returnValue);
-                this.projectHandler.activeProject.addTodo(new Todo(dialogResult["todo-title"], dialogResult["todo-description"], dialogResult["todo-date"], dialogResult["todo-priority"], dialogResult["todo-notes"]));
+                if (addTodoDialog.dataset.mode === "add")
+                    this.projectHandler.activeProject.addTodo(new Todo(dialogResult["todo-title"], dialogResult["todo-description"], parseISO(dialogResult["todo-date"]), dialogResult["todo-priority"], dialogResult["todo-notes"]));
+                else if (addTodoDialog.dataset.mode === "edit") {
+                    this.projectHandler.activeProject.todos[addTodoDialog.dataset.index].title = dialogResult["todo-title"];
+                    this.projectHandler.activeProject.todos[addTodoDialog.dataset.index].description = dialogResult["todo-description"];
+                    this.projectHandler.activeProject.todos[addTodoDialog.dataset.index].dueDate = parseISO(dialogResult["todo-date"]);
+                    this.projectHandler.activeProject.todos[addTodoDialog.dataset.index].priority = dialogResult["todo-priority"];
+                    this.projectHandler.activeProject.todos[addTodoDialog.dataset.index].notes = dialogResult["todo-notes"];
+                }
                 this.sidebar.display();
                 this.mainContent.display("project-todos");
             }

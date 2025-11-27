@@ -11,4 +11,8 @@ export default class Project {
     removeTodo(todoId) {
         this.todos = this.todos.filter((todo) => todo.id !== todoId);
     }
+
+    findTodoIndex(todoId) {
+        return this.todos.findIndex((todo) => todo.id === todoId);
+    }
 }
