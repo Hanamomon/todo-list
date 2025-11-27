@@ -131,6 +131,13 @@ export default class EventManager {
         const closeBtn = document.getElementById("todo-close-btn");
         const form = document.querySelector("form");
 
+        addTodoDialog.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                form.reset();
+                addTodoDialog.close("cancel");
+            }
+        })
+
         closeBtn.addEventListener("click", () => {
             form.reset();
             addTodoDialog.close("cancel");
