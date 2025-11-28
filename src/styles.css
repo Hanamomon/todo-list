@@ -103,3 +103,46 @@ textarea {
   display: flex;
   justify-content: space-between;
 }
+
+/* Complete task styling */
+
+.todo-item-prio > input {
+  display: grid;
+  place-content: center;
+  appearance: none;
+  margin: 0;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.1em solid black;
+  border-radius: 0.5em;
+}
+
+.priority-low > input {
+  border-color: blue;
+}
+
+.priority-medium > input {
+  border-color: yellow;
+}
+
+.priority-high > input {
+  border-color: red;
+}
+
+.todo-item-prio > input::before {
+  content: "";
+  width: 0.75em;
+  height: 0.75em;
+  transform: scale(0);
+  box-shadow: inset 1em 1em #fc7753;
+  clip-path: polygon(80% 0, 36% 57%, 18% 44%, 0% 68%, 36% 100%, 100% 15%);
+}
+
+.todo-item-prio > input:checked::before {
+  transform: scale(1);
+}
+
+.todo-complete {
+  text-decoration: line-through;
+  color: grey;
+}

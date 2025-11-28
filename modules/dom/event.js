@@ -82,15 +82,15 @@ export default class EventManager {
                 let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.parentNode.parentNode.dataset.id);
                 this.openEditModal(currentIndex);
             }
-            else if (e.target.parentNode.className === "todo-item") {
-                let clickedTodoTitle = e.target.parentNode.firstChild.textContent;
+            else if (e.target.parentNode.className === "todo-item" || e.target.parentNode.classList.contains("todo-complete")) {
+                let clickedTodoTitle = e.target.parentNode.querySelector("p").textContent;
                 this.projectHandler.activeProject.todos.forEach((todo) => {
                     if (todo.title === clickedTodoTitle)
                         this.mainContent.display("single-todo", todo);
                 })
             }
-            else if (e.target.className === "todo-item") {
-                let clickedTodoTitle = e.target.firstChild.textContent;
+            else if (e.target.className === "todo-item" || e.target.classList.contains("todo-complete")) {
+                let clickedTodoTitle = e.target.querySelector("p").textContent;
                 this.projectHandler.activeProject.todos.forEach((todo) => {
                     if (todo.title === clickedTodoTitle)
                         this.mainContent.display("single-todo", todo);
@@ -98,6 +98,12 @@ export default class EventManager {
             }
             else if (e.target.parentNode.id === "project-todos-head" && e.target.tagName === "BUTTON") {
                 this.openAddModal();
+            }
+            else if (e.target.id === "complete-status-input") {
+                let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.parentNode.parentNode.dataset.id);
+                e.target.checked = e.target.checked;
+                this.projectHandler.activeProject.todos[currentIndex].complete = e.target.checked;
+                this.mainContent.display("project-todos");
             }
         })
     }

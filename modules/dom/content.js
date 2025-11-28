@@ -85,10 +85,41 @@ export default class MainContent {
         activeProject.todos.forEach((todo) => {
             const todoItemDiv = createAnElement("div", "todo-item");
             const todoItemTitle = createAnElement("p", "todo-item-title", "", todo.title);
-            const todoItemPrio = createAnElement("div", "todo-item-prio", "", todo.priority);
+
+            const todoItemPrio = createAnElement("div", "todo-item-prio", "");
+            const todoPrioCheck = createAnElement("input", "", "complete-status-input");
+            const todoPrioLabel = document.createElement("label");
+
             const todoItemEdit = createAnElement("img", "todo-item-edit");
             const todoItemDelete = createAnElement("img", "todo-item-delete");
             const todoItemIcons = createAnElement("div", "todo-item-icons");
+
+            todoPrioCheck.setAttribute("type", "checkbox");
+            todoPrioCheck.setAttribute("name", "complete-status");
+            todoPrioLabel.setAttribute("for", "complete-status-input");
+            if (todo.complete) {
+                todoPrioCheck.checked = true;
+                todoItemDiv.classList.add("todo-complete");
+            }
+            switch (todo.priority) {
+                case "low": {
+                    todoItemPrio.classList.add("priority-low");
+                    break;
+                }
+                case "medium": {
+                    todoItemPrio.classList.add("priority-medium");
+                    break;
+                }
+                case "high": {
+                    todoItemPrio.classList.add("priority-high");
+                    break;
+                }
+                default: {
+                    todoItemPrio.classList.add("priority-none");
+                }
+            }
+            todoItemPrio.append(todoPrioLabel ,todoPrioCheck);
+
             todoItemEdit.src = (editIcon);
             todoItemDelete.src = (deleteIcon);
             todoItemIcons.append(todoItemEdit, todoItemDelete);
@@ -96,10 +127,10 @@ export default class MainContent {
 
             if (isValid(todo.dueDate)) {
                 const todoItemDate = createAnElement ("p", "", "todo-item-date", format(todo.dueDate, "MMM do, yyyy"));
-                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemDate, todoItemIcons);
+                todoItemDiv.append(todoItemPrio, todoItemTitle, todoItemDate, todoItemIcons);
             }
             else
-                todoItemDiv.append(todoItemTitle, todoItemPrio, todoItemIcons);
+                todoItemDiv.append(todoItemPrio, todoItemTitle, todoItemIcons);
 
             todosDiv.appendChild(todoItemDiv);
         });
