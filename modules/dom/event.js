@@ -3,10 +3,11 @@ import Todo from "../todo";
 import {isValid, format, parseISO} from "date-fns";
 
 export default class EventManager {
-    constructor(projectHandler, sidebar, mainContent) {
+    constructor(projectHandler, sidebar, mainContent, storage) {
         this.projectHandler = projectHandler;
         this.sidebar = sidebar;
         this.mainContent = mainContent;
+        this.storage = storage;
     }
 
     sidebarEvents() {
@@ -21,6 +22,7 @@ export default class EventManager {
             }
             else if (e.target.className === "project-item" || e.target.classList.contains("active-project-sidebar") || e.target.tagName === "LI") {
                 this.projectHandler.selectActiveProject(e.target.textContent);
+                this.storage.populateStorage();
                 this.sidebar.display();
                 this.mainContent.display("project-todos");
             }
@@ -33,6 +35,7 @@ export default class EventManager {
                     this.mainContent.display("project-todos");
                 }
                 this.sidebar.display();
+                this.storage.populateStorage();
             }
         });
     }
@@ -68,6 +71,7 @@ export default class EventManager {
                     this.sidebar.display();
                     this.mainContent.display("project-todos");
                 }
+                this.storage.populateStorage();
             }
         })
     }
@@ -77,6 +81,7 @@ export default class EventManager {
             if (e.target.className === "todo-item-delete") {
                 this.projectHandler.activeProject.removeTodo(e.target.parentNode.parentNode.dataset.id);
                 this.mainContent.display("project-todos");
+                this.storage.populateStorage();
             }
             else if (e.target.className === "todo-item-edit") {
                 let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.parentNode.parentNode.dataset.id);
@@ -104,6 +109,7 @@ export default class EventManager {
                 e.target.checked = e.target.checked;
                 this.projectHandler.activeProject.todos[currentIndex].complete = e.target.checked;
                 this.mainContent.display("project-todos");
+                this.storage.populateStorage();
             }
         })
     }
@@ -182,6 +188,7 @@ export default class EventManager {
                 }
                 this.sidebar.display();
                 this.mainContent.display("project-todos");
+                this.storage.populateStorage();
             }
         })
     }
