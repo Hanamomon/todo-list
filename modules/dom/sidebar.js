@@ -22,9 +22,7 @@ export default class Sidebar {
         this.sidebarDiv.innerHTML = "";
         const heading = createAnElement("h1", "", "", "Todo List");
 
-        const inbox = document.createElement("h3");
-        inbox.textContent = this.todoList.projects[0].name;
-        this.sidebarDiv.append(heading, inbox);
+        this.sidebarDiv.appendChild(heading);
 
         this.displayProjects();
     }
@@ -43,7 +41,7 @@ export default class Sidebar {
             const projectElement = createAnElement("div", "project-item")
             const projectName = createAnElement("li", "", "", project.name);
             if (project.name === this.todoList.activeProject.name) {
-                projectElement.classList.toggle("active-project-sidebar");
+                projectElement.setAttribute("id", "active-project-sidebar");
             }
             if (project.name === "Inbox") {
                 projectElement.appendChild(projectName);

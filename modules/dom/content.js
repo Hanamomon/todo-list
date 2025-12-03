@@ -1,5 +1,5 @@
-import deleteIcon from "../../src/icons/delete.svg";
-import editIcon from "../../src/icons/edit.svg";
+import deleteIcon from "../../src/icons/delete_dark.svg";
+import editIcon from "../../src/icons/edit_dark.svg";
 
 import {isValid, format} from "date-fns";
 
@@ -126,7 +126,7 @@ export default class MainContent {
             todoItemDiv.setAttribute("data-id", todo.id);
 
             if (isValid(todo.dueDate)) {
-                const todoItemDate = createAnElement ("p", "", "todo-item-date", format(todo.dueDate, "MMM do, yyyy"));
+                const todoItemDate = createAnElement ("p", "todo-item-date", "", format(todo.dueDate, "MMM do, yyyy"));
                 todoItemDiv.append(todoItemPrio, todoItemTitle, todoItemDate, todoItemIcons);
             }
             else

@@ -20,7 +20,8 @@ export default class EventManager {
                     e.target.parentNode.classList.add("project-list-selected");
                 this.mainContent.display("project-view");
             }
-            else if (e.target.className === "project-item" || e.target.classList.contains("active-project-sidebar") || e.target.tagName === "LI") {
+            else if (e.target.className === "project-item" || e.target.id === "active-project-sidebar" || e.target.tagName === "LI") {
+                console.log(e.target.id)
                 this.projectHandler.selectActiveProject(e.target.textContent);
                 this.storage.populateStorage();
                 this.sidebar.display();

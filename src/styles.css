@@ -1,7 +1,31 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('fonts/Quicksand-Regular.woff2') format('woff2'),
+        url('fonts/Quicksand-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('fonts/Raleway-Regular.woff2') format('woff2'),
+        url('fonts/Raleway-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Normalize/Reset styles */
 
 :root {
   line-height: 1.5;
+  --mauve-shadow: #744253;
+  --soft-linen: #ede7d9;
+  --evergreen: #041b15;
+  --rosewood: #9b596f;
+  --dusty-mauve: #ad7185;
+  --sand-dune: #ded3ba;
 }
 
 *,
@@ -39,16 +63,24 @@ textarea {
   min-height: 100vh;
 }
 
+h1, h2 {
+  font-family: "Quicksand", system-ui;
+}
+
+p, li, button, label, input {
+  font-family: "Raleway", system-ui;
+}
+
 /* Sidebar */
 
 #sidebar {
   flex-basis: 20vw;
-  background-color: #9381ff;
+  background-color: var(--mauve-shadow);
   padding: 1rem 1.5rem;
 }
 
 #sidebar li, #sidebar h3, #sidebar h2, #sidebar h1 {
-  color: #f8f7ff;
+  color: white;
 }
 
 #project-head-div {
@@ -62,15 +94,19 @@ textarea {
 }
 
 .project-list-selected {
-  background-color: #b8b8ff;
-  border-radius: 25px;
+  background-color: var(--dusty-mauve);
+  border-radius: 10px;
+}
+
+#project-head-div {
+  cursor: pointer;
 }
 
 #project-add-button {
-  background-color: #fc7753;
+  background-color: var(--rosewood);
   border-radius: 50%;
   padding: 0 0.5rem;
-  color: #f8f7ff;
+  color: white;
   font-size: 1.5rem;
   border: none;
 }
@@ -79,19 +115,25 @@ textarea {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  border-radius: 25px;
+  border-radius: 10px;
 }
 
-.active-project-sidebar {
-  background-color: #fc7753;
+.project-item:hover {
+  background-color: var(--dusty-mauve);
+  cursor: pointer;
+}
+
+#active-project-sidebar {
+  background-color: var(--rosewood);
 }
 
 /* Content */
 
 #content {
   flex: 1;
-  background-color: #b8b8ff;
+  background-color: #ede7d9;
   padding: 1rem 1.5rem;
+  box-shadow: inset 3px 0px 5px grey;
 }
 
 #project-todos-head {
@@ -99,9 +141,54 @@ textarea {
   justify-content: space-between;
 }
 
+#project-todos-head button {
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: var(--mauve-shadow);
+  color: white;
+  border: 1px solid var(--evergreen);
+}
+
+#project-todos-head button:hover {
+  background-color: var(--dusty-mauve);
+  transform: translateY(1px);
+  cursor: pointer;
+}
+
 .todo-item {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 20px 3fr 1fr 100px;
+  align-items: center;
+  gap: 20px;
+
+  padding: 0.5rem 0 0.5rem 0.5rem;
+
+  border-bottom: 1px solid grey;
+}
+
+.todo-item:first-of-type {
+  margin-top: 0.75rem;
+}
+
+.todo-item:last-of-type {
+  border-bottom: none;
+}
+
+.todo-item:hover {
+  background-color: var(--sand-dune);
+  border-color: var(--sand-dune);
+  border-radius: 10px;
+  cursor: text;
+}
+
+.todo-item-icons {
+  grid-area: 1 / 4 / 2 / 5;
+  justify-self: end;
+}
+
+.todo-item-edit:hover, .todo-item-delete:hover {
+  transform: translateY(2px);
+  cursor: pointer;
 }
 
 /* Complete task styling */
@@ -113,20 +200,24 @@ textarea {
   margin: 0;
   width: 1.15em;
   height: 1.15em;
-  border: 0.1em solid black;
+  border: 0.15em solid grey;
   border-radius: 0.5em;
 }
 
+.todo-item-prio > input:hover {
+  cursor: pointer;
+}
+
 .priority-low > input {
-  border-color: blue;
+  border-color: #3f7cac;
 }
 
 .priority-medium > input {
-  border-color: yellow;
+  border-color: #f0a202;
 }
 
 .priority-high > input {
-  border-color: red;
+  border-color: #fe4a49;
 }
 
 .todo-item-prio > input::before {
@@ -134,7 +225,7 @@ textarea {
   width: 0.75em;
   height: 0.75em;
   transform: scale(0);
-  box-shadow: inset 1em 1em #fc7753;
+  box-shadow: inset 1em 1em var(--evergreen);
   clip-path: polygon(80% 0, 36% 57%, 18% 44%, 0% 68%, 36% 100%, 100% 15%);
 }
 
@@ -145,4 +236,121 @@ textarea {
 .todo-complete {
   text-decoration: line-through;
   color: grey;
+}
+
+/* Todo Add Dialog */
+
+#todo-add-dialog {
+  background-color: var(--mauve-shadow);
+  border: 2px solid var(--evergreen);
+  border-radius: 10px;
+  color: white;
+}
+
+#todo-add-dialog form {
+  display: grid;
+  gap: 10px;
+
+}
+
+.todo-add-field {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+}
+
+.todo-add-field input, textarea {
+  border-radius: 10px;
+  padding: 0.5rem;
+  border: 1px solid grey;
+}
+
+textarea {
+  resize: none;
+}
+
+.todo-add-field input:hover, textarea:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+.todo-add-field input:focus, textarea:focus {
+  outline: 1px solid var(--evergreen);
+}
+
+#todo-add-dialog fieldset div {
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+}
+
+#todo-add-dialog input[type="radio"] {
+  appearance: none;
+  margin: 0 0 1rem 0;
+  font: inherit;
+  color: white;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid white;
+  border-radius: 50%;
+  transform: translateY(0.2em);
+  display: grid;
+  place-content: center;
+}
+
+#todo-add-dialog input[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+}
+
+#todo-priority-none::before {
+  box-shadow: inset 1em 1em white;
+}
+
+#todo-priority-low::before {
+  box-shadow: inset 1em 1em #3f7cac;
+}
+
+#todo-priority-medium::before {
+  box-shadow: inset 1em 1em #f0a202;
+}
+
+#todo-priority-high::before {
+  box-shadow: inset 1em 1em #fe4a49;
+}
+
+#todo-add-dialog input[type="radio"]:hover {
+  cursor: pointer;
+}
+
+#todo-add-dialog input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+#todo-add-dialog input[type="radio"]:focus {
+  outline: max(2px, 0.15em) solid white;
+  outline-offset: max(2px, 0.15em);
+}
+
+#todo-add-buttons {
+  justify-self: end;
+}
+
+#todo-add-buttons button {
+  background-color: var(--soft-linen);
+  color: var(--evergreen);
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+
+#todo-add-buttons button:hover {
+  background-color: var(--sand-dune);
+  cursor: pointer;
+}
+
+#todo-add-buttons button:focus {
+  outline: 1px solid var(--evergreen);
 }
