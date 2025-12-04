@@ -112,6 +112,13 @@ export default class EventManager {
                 this.mainContent.display("project-todos");
                 this.storage.populateStorage();
             }
+            else if (e.target.closest(".project-card")) {
+                console.log(e.target.closest(".project-card").firstChild);
+                this.projectHandler.selectActiveProject(e.target.closest(".project-card").firstChild.textContent);
+                this.storage.populateStorage();
+                this.sidebar.display();
+                this.mainContent.display("project-todos");
+            }
         })
     }
     
