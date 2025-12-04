@@ -63,7 +63,7 @@ textarea {
   height: 100vh;
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-family: "Quicksand", system-ui;
 }
 
@@ -289,8 +289,39 @@ p, li, button, label, input {
 
 #single-todo-desc, #single-todo-notes {
   background-color: var(--sand-dune);
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   border-radius: 10px;
+}
+
+/* Projects overview display */
+
+#project-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background-color: var(--sand-dune);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: -2px 2px 5px rgb(170, 170, 170);
+}
+
+.project-card:hover {
+  background-color: #d1c29f;
+  transform: translateY(2px);
+  cursor: pointer;
+}
+
+.project-card h3 {
+  justify-self: center;
+  margin-bottom: 0.5rem;
+}
+
+.project-card ul {
+  border-top: 1px solid var(--evergreen);
+  padding-top: 1rem;
 }
 
 /* Complete task styling */
