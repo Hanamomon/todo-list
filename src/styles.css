@@ -60,7 +60,7 @@ textarea {
 
 #container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 h1, h2 {
@@ -74,9 +74,23 @@ p, li, button, label, input {
 /* Sidebar */
 
 #sidebar {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1/2;
   flex-basis: 20vw;
   background-color: var(--mauve-shadow);
   padding: 1rem 1.5rem;
+}
+
+#sidebar-projects {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#project-list {
+  overflow-y: auto;
 }
 
 #sidebar li, #sidebar h3, #sidebar h2, #sidebar h1 {
@@ -99,16 +113,29 @@ p, li, button, label, input {
 }
 
 #project-head-div {
+  align-items: center;
   cursor: pointer;
 }
 
 #project-add-button {
+  align-self: center;
   background-color: var(--rosewood);
   border-radius: 50%;
-  padding: 0 0.5rem;
+  height: 50px;
+  width: 50px;
   color: white;
-  font-size: 1.5rem;
+  font-size: 2rem;
   border: none;
+}
+
+#project-add-button:hover {
+  background-color: #5b343e;
+  transform: translateY(2px);
+  cursor: pointer;
+}
+
+#project-add-button:focus {
+  outline: 2px solid var(--evergreen);
 }
 
 .project-item {
@@ -123,6 +150,11 @@ p, li, button, label, input {
   cursor: pointer;
 }
 
+.project-item img:hover {
+  transform: translateY(2px);
+  cursor: pointer;
+}
+
 #active-project-sidebar {
   background-color: var(--rosewood);
 }
@@ -134,6 +166,7 @@ p, li, button, label, input {
   background-color: #ede7d9;
   padding: 1rem 1.5rem;
   box-shadow: inset 3px 0px 5px grey;
+  overflow-y: auto;
 }
 
 #project-todos-head {
@@ -201,7 +234,6 @@ p, li, button, label, input {
   width: 1.15em;
   height: 1.15em;
   border: 0.15em solid grey;
-  border-radius: 0.5em;
 }
 
 .todo-item-prio > input:hover {
@@ -238,19 +270,34 @@ p, li, button, label, input {
   color: grey;
 }
 
-/* Todo Add Dialog */
+/* Add Dialogs */
 
-#todo-add-dialog {
+#todo-add-dialog, #project-add-dialog {
   background-color: var(--mauve-shadow);
   border: 2px solid var(--evergreen);
   border-radius: 10px;
   color: white;
 }
 
-#todo-add-dialog form {
+#todo-add-dialog form, #project-add-dialog form {
   display: grid;
   gap: 10px;
+}
 
+#project-add-dialog label {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+#project-add-name {
+  grid-area: 2 / 1 / 3 / 4;
+}
+
+#close-btn {
+  grid-area: 3 / 2 / 4 / 3;
+}
+
+#confirm-btn {
+  grid-area: 3 / 3 / 4 / 4;
 }
 
 .todo-add-field {
@@ -258,7 +305,7 @@ p, li, button, label, input {
   grid-template-columns: 7.5rem 1fr;
 }
 
-.todo-add-field input, textarea {
+.todo-add-field input, textarea, #project-add-name {
   border-radius: 10px;
   padding: 0.5rem;
   border: 1px solid grey;
@@ -268,11 +315,11 @@ textarea {
   resize: none;
 }
 
-.todo-add-field input:hover, textarea:hover {
-  background-color: rgb(221, 221, 221);
+.todo-add-field input:hover, textarea:hover, #project-add-name:hover {
+  background-color: rgb(235, 235, 235);
 }
 
-.todo-add-field input:focus, textarea:focus {
+.todo-add-field input:focus, textarea:focus, #project-add-name:focus {
   outline: 1px solid var(--evergreen);
 }
 
@@ -338,7 +385,7 @@ textarea {
   justify-self: end;
 }
 
-#todo-add-buttons button {
+#todo-add-buttons button, #close-btn, #confirm-btn {
   background-color: var(--soft-linen);
   color: var(--evergreen);
   padding: 0.5rem;
@@ -346,11 +393,11 @@ textarea {
   border: 1px solid grey;
 }
 
-#todo-add-buttons button:hover {
+#todo-add-buttons button:hover, #close-btn:hover, #confirm-btn:hover {
   background-color: var(--sand-dune);
   cursor: pointer;
 }
 
-#todo-add-buttons button:focus {
+#todo-add-buttons button:focus, #close-btn:focus, #confirm-btn:focus {
   outline: 1px solid var(--evergreen);
 }
