@@ -36,6 +36,11 @@ export default class EventManager {
                     this.mainContent.display("project-todos");
                 }
                 this.sidebar.display();
+                
+                if (document.querySelector("#project-view")) {
+                    this.mainContent.display("project-view");
+                }
+
                 this.storage.populateStorage();
             }
         });
