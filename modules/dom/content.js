@@ -144,7 +144,11 @@ export default class MainContent {
                 }
             }
 
-            projectCard.append(projectName, projectTodos);
+            projectCard.append(projectName);
+
+            if (projectTodos.textContent)
+                projectCard.append(projectTodos);
+
             projectViewDiv.appendChild(projectCard);
         });
 
