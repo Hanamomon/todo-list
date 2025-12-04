@@ -224,6 +224,75 @@ p, li, button, label, input {
   cursor: pointer;
 }
 
+/* Single Todo display */
+
+#single-todo {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 25px 1fr 4fr 2fr;
+}
+
+#single-todo-date {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+#single-todo-prio {
+  grid-area: 1 / 2 / 2 / 3;
+  justify-self: end;
+  position: relative;
+}
+
+.single-todo-low::before, .single-todo-medium::before, .single-todo-high::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  height: 20px;
+  width: 20px;
+}
+
+.single-todo-low::before {
+  background: url("./icons/flag_low.svg") no-repeat center center/cover;
+}
+
+.single-todo-low {
+  color: #3f7cac;
+}
+
+.single-todo-medium::before {
+  background: url("./icons/flag_medium.svg") no-repeat center center/cover;
+}
+
+.single-todo-medium {
+  color: #f0a202;
+}
+
+.single-todo-high::before {
+  background: url("./icons/flag_high.svg") no-repeat center center/cover;
+}
+
+.single-todo-high {
+  color: #fe4a49;
+}
+
+#single-todo-title {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+#single-todo-desc {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+#single-todo-notes {
+  grid-area: 4 / 1 / 5 / 3;
+}
+
+#single-todo-desc, #single-todo-notes {
+  background-color: var(--sand-dune);
+  padding: 0.5rem 0.5rem;
+  border-radius: 10px;
+}
+
 /* Complete task styling */
 
 .todo-item-prio > input {

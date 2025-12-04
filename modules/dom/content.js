@@ -40,6 +40,7 @@ export default class MainContent {
         const todoDiv = createAnElement("div", "", "single-todo")
         const todoTitle = createAnElement("h2", "", "single-todo-title", todo.title);
         const todoDesc = createAnElement("p", "", "single-todo-desc", todo.description);
+        const todoPrio = createAnElement("p", "", "single-todo-prio", todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1));
 
         if (isValid(new Date(todo.dueDate))) {
             const todoDate = createAnElement ("p", "", "single-todo-date", format(todo.dueDate, "MMM do, yyyy"));
@@ -48,21 +49,10 @@ export default class MainContent {
         else
             todoDiv.append(todoTitle, todoDesc);
 
-        /*if (Array.isArray(todo.checklist)) {
-            const todoChecklist = createAnElement("ul", "", "todo-checklist");
-            todo.checklist.forEach((checkItem) => {
-                const checkItemElement = createAnElement("li", "check-item");
-                const checkItemBox = document.createElement("input");
-                const checkItemText = createAnElement("label", "", "", checkItem);
-                checkItemBox.type = "checkbox";
-
-                checkItemElement.append(checkItemBox, checkItemText);
-
-                todoChecklist.appendChild(checkItemElement);
-            })
-
-            todoDiv.appendChild(todoChecklist);
-        }*/
+        if (todo.priority !== "none") {
+            todoPrio.classList.toggle(`single-todo-${todo.priority}`);
+            todoDiv.appendChild(todoPrio);
+        }
 
         if (todo.notes) {
             const todoNotes = createAnElement("p", "", "single-todo-notes", todo.notes);
