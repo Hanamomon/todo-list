@@ -13,17 +13,11 @@ export default class EventManager {
     sidebarEvents() {
         const addDialog = document.getElementById("project-add-dialog");
         this.sidebar.sidebarDiv.addEventListener("click", (e) => {
-            if (e.target.closest("#project-head-div") && e.target.id !== "project-add-button") {
+            if (e.target.id === "project-add-button")
+                addDialog.showModal();
+            else if (e.target.closest("#project-head-div")) {
                 e.target.closest("#project-head-div").classList.add("project-list-selected");
                 this.mainContent.display("project-view");
-            }
-            else if (e.target.id === "project-add-button")
-                addDialog.showModal();
-            else if (e.target.closest(".project-item")) {
-                this.projectHandler.selectActiveProject(e.target.textContent);
-                this.storage.populateStorage();
-                this.sidebar.display();
-                this.mainContent.display("project-todos");
             }
             else if (e.target.tagName === "IMG") {
                 this.projectHandler.removeProject(e.target.previousElementSibling.textContent);
@@ -38,6 +32,12 @@ export default class EventManager {
                 }
 
                 this.storage.populateStorage();
+            }
+            else if (e.target.closest(".project-item")) {
+                this.projectHandler.selectActiveProject(e.target.textContent);
+                this.storage.populateStorage();
+                this.sidebar.display();
+                this.mainContent.display("project-todos");
             }
         });
     }
