@@ -13,22 +13,18 @@ export default class EventManager {
     sidebarEvents() {
         const addDialog = document.getElementById("project-add-dialog");
         this.sidebar.sidebarDiv.addEventListener("click", (e) => {
-            if (e.target.id === "project-head-div" || e.target.tagName === "H2") {
-                if (e.target.id === "project-head-div")
-                    e.target.classList.add("project-list-selected");
-                else
-                    e.target.parentNode.classList.add("project-list-selected");
+            if (e.target.closest("#project-head-div") && e.target.id !== "project-add-button") {
+                e.target.closest("#project-head-div").classList.add("project-list-selected");
                 this.mainContent.display("project-view");
             }
-            else if (e.target.className === "project-item" || e.target.id === "active-project-sidebar" || e.target.tagName === "LI") {
-                console.log(e.target.id)
+            else if (e.target.id === "project-add-button")
+                addDialog.showModal();
+            else if (e.target.closest(".project-item")) {
                 this.projectHandler.selectActiveProject(e.target.textContent);
                 this.storage.populateStorage();
                 this.sidebar.display();
                 this.mainContent.display("project-todos");
             }
-            else if (e.target.id === "project-add-button")
-                addDialog.showModal();
             else if (e.target.tagName === "IMG") {
                 this.projectHandler.removeProject(e.target.previousElementSibling.textContent);
                 if (e.target.parentNode.firstChild.textContent === this.projectHandler.activeProject.name) {
@@ -85,33 +81,26 @@ export default class EventManager {
     contentEvents() {
         this.mainContent.contentDiv.addEventListener("click", (e) => {
             if (e.target.className === "todo-item-delete") {
-                this.projectHandler.activeProject.removeTodo(e.target.parentNode.parentNode.dataset.id);
+                this.projectHandler.activeProject.removeTodo(e.target.closest(".todo-item").dataset.id);
                 this.mainContent.display("project-todos");
                 this.storage.populateStorage();
             }
             else if (e.target.className === "todo-item-edit") {
-                let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.parentNode.parentNode.dataset.id);
+                let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.closest(".todo-item").dataset.id);
                 this.openEditModal(currentIndex);
             }
-            else if (e.target.parentNode.className === "todo-item" || e.target.parentNode.classList.contains("todo-complete")) {
-                let clickedTodoTitle = e.target.parentNode.querySelector("p").textContent;
+            else if (e.target.closest(".todo-item") && !e.target.closest(".todo-item-prio")) {
+                let clickedTodoTitle = e.target.closest(".todo-item").querySelector(".todo-item-title").textContent;
                 this.projectHandler.activeProject.todos.forEach((todo) => {
                     if (todo.title === clickedTodoTitle)
                         this.mainContent.display("single-todo", todo);
                 })
             }
-            else if (e.target.className === "todo-item" || e.target.classList.contains("todo-complete")) {
-                let clickedTodoTitle = e.target.querySelector("p").textContent;
-                this.projectHandler.activeProject.todos.forEach((todo) => {
-                    if (todo.title === clickedTodoTitle)
-                        this.mainContent.display("single-todo", todo);
-                })
-            }
-            else if (e.target.parentNode.id === "project-todos-head" && e.target.tagName === "BUTTON") {
+            else if (e.target.closest("#project-todos-head") && e.target.tagName === "BUTTON") {
                 this.openAddModal();
             }
             else if (e.target.id === "complete-status-input") {
-                let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.parentNode.parentNode.dataset.id);
+                let currentIndex = this.projectHandler.activeProject.findTodoIndex(e.target.closest(".todo-item").dataset.id);
                 e.target.checked = e.target.checked;
                 this.projectHandler.activeProject.todos[currentIndex].complete = e.target.checked;
                 this.mainContent.display("project-todos");
