@@ -159,6 +159,10 @@ p, li, button, label, input {
   background-color: var(--rosewood);
 }
 
+#active-project-sidebar:hover {
+  background-color: #5b343e;
+}
+
 /* Content */
 
 #content {
@@ -334,6 +338,7 @@ p, li, button, label, input {
   width: 1.15em;
   height: 1.15em;
   border: 0.15em solid grey;
+  border-radius: 5px;
 }
 
 .todo-item-prio > input:hover {
